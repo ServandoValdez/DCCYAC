@@ -6,6 +6,8 @@
 package interfaces;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import negocio.CtrlCliente;
 import negocio.FabricaNegocios;
@@ -21,6 +23,7 @@ public class actualizarCliente extends javax.swing.JFrame {
     private Cliente cliente;
     private FabricaNegocios f = new FabricaNegocios();
     private CtrlCliente ctrlCliente = f.getCtrlCliente();
+    boolean confirmacion = false;
 
     public actualizarCliente() {
         initComponents();
@@ -48,8 +51,8 @@ public class actualizarCliente extends javax.swing.JFrame {
         String domicilio = txtDomicilio.getText();
 
         if (!nombre.isEmpty() && !apellido.isEmpty()
-                && !correo.isEmpty() && !telefono.isEmpty()
-                && !domicilio.isEmpty() && fecha != null) {
+                && !correo.isEmpty() && !telefono.isEmpty() && telefono.chars().count() >= 10
+                && !domicilio.isEmpty() && fecha != null && confirmacion == false) {
             return true;
         }
 
@@ -85,7 +88,7 @@ public class actualizarCliente extends javax.swing.JFrame {
             cliente.setTelefono(telefono);
             cliente.setDomicilio(domicilio);
             ctrlCliente.actualizar(cliente);
-            JOptionPane.showMessageDialog(null, "Cliente actualizado");
+            JOptionPane.showMessageDialog(null, "CLIENTE ACTUALIZADO");
             limpiar();
         } else {
             JOptionPane.showMessageDialog(null, "DATOS INVÁLIDOS");
@@ -155,10 +158,20 @@ public class actualizarCliente extends javax.swing.JFrame {
 
         txtTelefono.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtTelefono.setBorder(null);
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, 300, 30));
 
         txtCorreo.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtCorreo.setBorder(null);
+        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCorreoFocusLost(evt);
+            }
+        });
         getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 300, 30));
 
         txtApellido.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
@@ -184,8 +197,41 @@ public class actualizarCliente extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         this.actualizar();
-
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+
+        if (txtTelefono.getText().length() == 10) {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "SÓLO SE PERMITEN 10 CARACTERES");
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
+        String email = txtCorreo.getText().trim().toLowerCase();
+        if (email.isEmpty()) {
+            txtCorreo.setText("");
+        } else {
+            Pattern pattern = Pattern
+                    .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+            Matcher mather = pattern.matcher(email);
+
+            if (mather.find() == false) {
+                JOptionPane.showMessageDialog(null, "EL CORREO NO ES VALIDO.",
+                        "ACCESO DENEGADO", JOptionPane.ERROR_MESSAGE);
+                txtCorreo.setText("");
+                confirmacion = false;
+            }
+
+        }
+    }//GEN-LAST:event_txtCorreoFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

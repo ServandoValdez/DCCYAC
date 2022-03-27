@@ -15,12 +15,14 @@ import objetos.Cliente;
 
 /**
  * Esta se supone que ya está
+ *
  * @author palom
  */
 public class registrarCliente extends javax.swing.JFrame {
-    
+
     private FabricaNegocios f = new FabricaNegocios();
     private CtrlCliente ctrlCliente = f.getCtrlCliente();
+    boolean confirmacion = false;
 
     /**
      * Creates new form registrarCliente
@@ -29,10 +31,11 @@ public class registrarCliente extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
     }
-    
+
     /**
      * Este método verifica que los datos ingresados por el usuarios sean los
      * requeridos por el sistema.
+     *
      * @return true si cumple con todos, false en caso contrario
      */
     private boolean verificarDatosCompletos() {
@@ -44,14 +47,14 @@ public class registrarCliente extends javax.swing.JFrame {
         String domicilio = txtDomicilio.getText();
 
         if (!nombre.isEmpty() && !apellido.isEmpty()
-                && !correo.isEmpty() && !telefono.isEmpty()
-                && !domicilio.isEmpty() && fecha!=null) {
+                && !correo.isEmpty() && !telefono.isEmpty() && telefono.chars().count() >= 10
+                && !domicilio.isEmpty() && fecha != null && confirmacion == false) {
             return true;
         }
 
         return false;
     }
-    
+
     /**
      * Este método guarda a un cliente
      */
@@ -62,8 +65,8 @@ public class registrarCliente extends javax.swing.JFrame {
         String correo = txtCorreo.getText();
         String telefono = txtTelefono.getText();
         String domicilio = txtDomicilio.getText();
-        
-        if(verificarDatosCompletos()){
+
+        if (verificarDatosCompletos()) {
             Cliente cliente = new Cliente(nombre, apellido, fecha, correo, telefono, domicilio);
             ctrlCliente.guardar(cliente);
             JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
@@ -81,7 +84,7 @@ public class registrarCliente extends javax.swing.JFrame {
         txtDomicilio.setText("");
         txtFecha.setCalendar(null);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,6 +145,11 @@ public class registrarCliente extends javax.swing.JFrame {
                 txtTelefonoFocusLost(evt);
             }
         });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, 300, 30));
 
         txtCorreo.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
@@ -176,9 +184,8 @@ public class registrarCliente extends javax.swing.JFrame {
     private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
         String email = txtCorreo.getText().trim().toLowerCase();
         if (email.isEmpty()) {
-            txtCorreo.setText("Correo Electrónico");
-        }
-        else {
+            txtCorreo.setText("");
+        } else {
             Pattern pattern = Pattern
                     .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
@@ -186,32 +193,38 @@ public class registrarCliente extends javax.swing.JFrame {
             Matcher mather = pattern.matcher(email);
 
             if (mather.find() == false) {
-                JOptionPane.showMessageDialog(null, "El correo ingresado es inválido.",
-                        "Acceso denegado", JOptionPane.ERROR_MESSAGE);
-                txtCorreo.setText("Correo Electrónico");
-            }           
-            
+                JOptionPane.showMessageDialog(null, "EL CORREO NO ES VALIDO.",
+                        "ACCESO DENEGADO", JOptionPane.ERROR_MESSAGE);
+                txtCorreo.setText("");
+                confirmacion = false;
+            }
+
         }
     }//GEN-LAST:event_txtCorreoFocusLost
 
     private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
-        String tel = txtTelefono.getText().trim();
-        if (tel.isEmpty()) {
-            txtTelefono.setText("Número telefónico");
-            JOptionPane.showMessageDialog(null, "El número ingresado es inválido.",
-                        "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+        if (txtTelefono.getText().length() < 10) {
+            JOptionPane.showMessageDialog(this, "INGRESE LOS 10 DIGITOS EN TELÉFONO");
         }
-        else if (txtTelefono.getText().length()!= 10) {
-            txtTelefono.setText("Número telefónico");
-            JOptionPane.showMessageDialog(null, "El número ingresado es inválido.",
-                        "Acceso denegado", JOptionPane.ERROR_MESSAGE);
-        }
+
     }//GEN-LAST:event_txtTelefonoFocusLost
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+
+        if (txtTelefono.getText().length() == 10) {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "SÓLO SE PERMITEN 10 CARACTERES");
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -226,5 +239,4 @@ public class registrarCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
-    
 }
