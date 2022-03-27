@@ -103,6 +103,7 @@ public class eliminarCliente extends javax.swing.JFrame {
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 610, -1, -1));
 
         txtFecha.setBackground(new java.awt.Color(255, 255, 255));
+        txtFecha.setEnabled(false);
         txtFecha.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         getContentPane().add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 250, 30));
 
@@ -119,22 +120,27 @@ public class eliminarCliente extends javax.swing.JFrame {
 
         txtDomicilio.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtDomicilio.setBorder(null);
+        txtDomicilio.setEnabled(false);
         getContentPane().add(txtDomicilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 530, 300, 30));
 
         txtTelefono.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtTelefono.setBorder(null);
+        txtTelefono.setEnabled(false);
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, 300, 30));
 
         txtCorreo.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtCorreo.setBorder(null);
+        txtCorreo.setEnabled(false);
         getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 300, 30));
 
         txtApellido.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtApellido.setBorder(null);
+        txtApellido.setEnabled(false);
         getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 300, 30));
 
         txtNombre.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtNombre.setBorder(null);
+        txtNombre.setEnabled(false);
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 202, 300, 30));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoEliminarCliente.png"))); // NOI18N

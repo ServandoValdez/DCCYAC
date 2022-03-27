@@ -5,29 +5,32 @@
  */
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 import objetos.Cliente;
 import repositorios.FabricaDatos;
 import repositorios.RepCliente;
+import java.util.ArrayList;
 
 /**
  * Clase que genera el control del objeto Cliente
+ *
  * @author Arguello, Encinas, García, Valdez
  */
 public class CtrlCliente {
-    
+
     public FabricaDatos f = new FabricaDatos();
     private RepCliente repCliente = f.getRepCliente();
-    
+
     /**
-     * Método que regresa una lista de todos los animales
+     * Método que regresa una lista de todos los clientes
      *
-     * @return regresa una lista de todos los animales.
+     * @return regresa una lista de todos los clientes.
      */
     public List<Cliente> consultar() {
         return repCliente.consultar();
     }
-    
+
     /**
      * Método que guarda un Cliente
      *
@@ -36,6 +39,7 @@ public class CtrlCliente {
     public void guardar(Cliente cliente) {
         repCliente.guardar(cliente);
     }
+
     /**
      * Método que elimina un Cliente.
      *
@@ -44,12 +48,14 @@ public class CtrlCliente {
     public void eliminar(Cliente cliente) {
         repCliente.eliminar(cliente);
     }
-    
+
     /**
      * Método que actualiza un cliente
-     * @param cliente 
+     *
+     * @param cliente
      */
-    public void actualizar(Cliente cliente){
+    public void actualizar(Cliente cliente) {
         repCliente.actualizar(cliente);
     }
+
 }

@@ -6,6 +6,7 @@
 package interfaces;
 
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import negocio.CtrlCliente;
@@ -17,19 +18,20 @@ import objetos.Cliente;
  * @author palom
  */
 public class consultaActualiza extends javax.swing.JFrame {
-    
+
     private FabricaNegocios f = new FabricaNegocios();
     private CtrlCliente ctrlCliente = f.getCtrlCliente();
     private ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) ctrlCliente.consultar();
+
     /**
      * Creates new form registrarCliente
      */
     public consultaActualiza() {
-       initComponents();
+        initComponents();
         setLocationRelativeTo(this);
         actualizaTabla();
     }
-    
+
     /**
      * Método que actualiza la tabla.
      */
@@ -50,7 +52,7 @@ public class consultaActualiza extends javax.swing.JFrame {
 
         String[] datos = new String[3];
         for (Cliente a : listaClientes) {
-            datos[0] = String.valueOf(a.getNombre())+" "+String.valueOf(a.getApellido());
+            datos[0] = String.valueOf(a.getNombre()) + " " + String.valueOf(a.getApellido());
             datos[1] = String.valueOf(a.getTelefono());
             datos[2] = String.valueOf(a.getDomicilio());
             modelo.addRow(datos);
@@ -59,7 +61,7 @@ public class consultaActualiza extends javax.swing.JFrame {
         tablaConsulta.setFont(fuente);
         tablaConsulta.setModel(modelo);
     }
-    
+
     /**
      * Método que regresa al cliente que se desea eliminar.
      *
@@ -127,6 +129,16 @@ public class consultaActualiza extends javax.swing.JFrame {
 
         txtBusqueda.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtBusqueda.setBorder(null);
+        txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBusquedaActionPerformed(evt);
+            }
+        });
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 250, 30));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/consultaActualiza.png"))); // NOI18N
@@ -148,6 +160,19 @@ public class consultaActualiza extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_tablaConsultaMouseClicked
 
+    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaActionPerformed
+
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtBusqueda.getText().equals("")) {
+                actualizaTabla();
+                return;
+            }
+            
+        }
+    }//GEN-LAST:event_txtBusquedaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

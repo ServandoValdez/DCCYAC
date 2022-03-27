@@ -106,7 +106,9 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPedidosActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        // TODO add your handling code here:
+        menuProductos abrir = new menuProductos();
+        abrir.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnProductosActionPerformed
 
     /**

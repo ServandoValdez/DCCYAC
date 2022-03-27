@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package interfaces;
 
 import objetos.Cliente;
 
 /**
  *
- * @author palom
+ * @author 
  */
 public class menuClientes extends javax.swing.JFrame {
 
@@ -35,6 +31,7 @@ public class menuClientes extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnConsultar = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
@@ -96,6 +93,17 @@ public class menuClientes extends javax.swing.JFrame {
         });
         getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, -1, -1));
 
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnAtras.png"))); // NOI18N
+        btnAtras.setContentAreaFilled(false);
+        btnAtras.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnAtras2.png"))); // NOI18N
+        btnAtras.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnAtras2.png"))); // NOI18N
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 410, -1, -1));
+
         jLabel5.setFont(new java.awt.Font("Bahnschrift", 1, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(63, 23, 127));
         jLabel5.setText("Consultar");
@@ -137,9 +145,16 @@ public class menuClientes extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        menu abrir = new menu();
+        abrir.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistrar;
