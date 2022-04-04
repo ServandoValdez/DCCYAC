@@ -102,7 +102,9 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
-        
+        menuPedidos abrir = new menuPedidos();
+        abrir.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPedidosActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed

@@ -22,7 +22,7 @@ import objetos.Producto;
  */
 public class registrarPedido extends javax.swing.JFrame {
 
-    private Date hoy = new Date();
+    private Date hoy;
     private ArrayList<Producto> productosSeleccionados = new ArrayList<>();
     private FabricaNegocios f = new FabricaNegocios();
     private CtrlPedido ctrlPedido = f.getCtrlPedido();
@@ -37,8 +37,10 @@ public class registrarPedido extends javax.swing.JFrame {
      */
     public registrarPedido() {
         initComponents();
-        
-        String fecha = (hoy.getDay() + 1) + "/" + hoy.getMonth() + "/" + hoy.getYear();
+        hoy = new Date();
+        //String fecha = (hoy.getDay() + 1) + "/" + (hoy.getMonth()+1) + "/" + hoy.getYear();
+        String fecha = hoy.toString().replace("MTS", "");
+        //String fecha = hoy.toString();
         txtFechaP.setText(String.valueOf(fecha));
         setLocationRelativeTo(this);
         this.cargarClientes();
@@ -199,9 +201,7 @@ public class registrarPedido extends javax.swing.JFrame {
         Cliente cliente = listaClientes.get(cbCliente.getSelectedIndex());
         String estado = txtEstado.getText().toUpperCase();
         float total = Float.parseFloat(txtTotal.getText());
-//        Pedido pedidouwu = new Pedido(cliente,listaProductos, fecha, fecha, estado,total);
-        ctrlPedido.guardar(new Pedido(cliente,listaProductos, hoy, fecha, estado,total));
-        //System.out.println(pedidouwu.toString());
+        ctrlPedido.guardar(new Pedido(cliente,productosSeleccionados, hoy, fecha, estado,total));
         this.limpiar();
         JOptionPane.showMessageDialog(null, "Registro exitoso");
         
@@ -247,40 +247,7 @@ public class registrarPedido extends javax.swing.JFrame {
         this.cargarProductos();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(registrarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(registrarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(registrarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(registrarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new registrarPedido().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
