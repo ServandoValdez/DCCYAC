@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import objetos.Cliente;
 import static repositorios.RepBase.baseDatos;
+import org.bson.Document; 
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCursor;
 
 /**
  * Clase que genera el repositorio del Cliente implementando el repositorio base
@@ -64,5 +70,35 @@ public class RepCliente {
                 Updates.set("telefono",cliente.getTelefono()));
         clientes.updateOne(Filters.eq("_id", cliente.getId()), 
                 Updates.set("domicilio",cliente.getDomicilio()));
+    }
+    
+    /**
+     * Método que busca clientes por nombre
+     * @param nombre Nombre a buscar
+     * @return regresa una lista de todos los clientes con nombre coincidente
+     */
+    public List<Cliente> buscarNombre(String nombre) {
+        List<Cliente> clientesB = new ArrayList<>();
+        
+        Document regQuery = new Document();
+        regQuery.append("$regex", "(?)" + Pattern.quote(nombre));
+        regQuery.append("$options", "i");
+        
+        Document findQuery = new Document();
+        findQuery.append("nombre", regQuery);
+        
+        FindIterable<Document> iterable = baseDatos.getCollection("Cliente").find(findQuery);
+        MongoCursor<Document> cursor = iterable.iterator();
+        
+        while (cursor.hasNext()) {
+            Document document = cursor.next();
+            String n = document.getString("nombre");
+            
+            Cliente  busqueda = clientes.find(Filters.eq("nombre", n)).first();
+            
+            clientesB.add(busqueda);
+        }
+        
+        return clientesB;
     }
 }

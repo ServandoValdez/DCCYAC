@@ -5,10 +5,8 @@
  */
 package negocio;
 
-import java.util.ArrayList;
 import java.util.List;
 import repositorios.FabricaDatos;
-import java.util.ArrayList;
 import objetos.Producto;
 import repositorios.RepProducto;
 /**
@@ -57,4 +55,15 @@ public class CtrlProducto {
         repProducto.actualizar(producto);
     }
 
+    /**
+     * Método que busca productos por nombre
+     * 
+     * @param nombre Nombre a buscar
+     * @return regresa una lista de todos los productos con nombre coincidente
+     */
+    public List<Producto> buscarNombre(String nombre) {
+        List<Producto> productosB = repProducto.buscarNombre(nombre);
+        return productosB;
+    }
+    
 }

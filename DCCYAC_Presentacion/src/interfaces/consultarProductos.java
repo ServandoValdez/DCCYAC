@@ -23,13 +23,13 @@ public class consultarProductos extends javax.swing.JFrame {
     public consultarProductos() {
         initComponents();
         setLocationRelativeTo(this);
-        actualizaTabla();
+        actualizaTabla(listaProducto);
     }
 
     /**
      * Método que actualiza la tabla.
      */
-    public void actualizaTabla() {
+    public void actualizaTabla(ArrayList<Producto> lista) {
         DefaultTableModel modelo = new DefaultTableModel() {
 
             @Override
@@ -45,7 +45,7 @@ public class consultarProductos extends javax.swing.JFrame {
         tablaConsulta.setModel(modelo);
 
         String[] datos = new String[3];
-        for (Producto a : listaProducto) {
+        for (Producto a : lista) {
             datos[0] = String.valueOf(a.getNombre());
             datos[1] = String.valueOf(a.getPrecio());
             datos[2] = String.valueOf(a.getStock());
@@ -85,6 +85,7 @@ public class consultarProductos extends javax.swing.JFrame {
         tablaConsulta = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -123,6 +124,14 @@ public class consultarProductos extends javax.swing.JFrame {
         txtBusqueda.setBorder(null);
         getContentPane().add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 250, 30));
 
+        btnBuscar.setContentAreaFilled(false);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 40, 35));
+
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/consultarProducto2.png"))); // NOI18N
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -141,8 +150,21 @@ public class consultarProductos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_tablaConsultaMouseClicked
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String busqueda = txtBusqueda.getText();
+        ArrayList<Producto> productosB = (ArrayList<Producto>) ctrlProducto.buscarNombre(busqueda);
+        if (productosB  == null) {
+            actualizaTabla(listaProducto);
+        }
+        else
+        {
+            actualizaTabla(productosB);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel fondo;
     private javax.swing.JScrollPane jScrollPane2;

@@ -5,12 +5,10 @@
  */
 package negocio;
 
-import java.util.ArrayList;
 import java.util.List;
 import objetos.Cliente;
 import repositorios.FabricaDatos;
 import repositorios.RepCliente;
-import java.util.ArrayList;
 
 /**
  * Clase que genera el control del objeto Cliente
@@ -56,6 +54,16 @@ public class CtrlCliente {
      */
     public void actualizar(Cliente cliente) {
         repCliente.actualizar(cliente);
+    }
+    
+    /**
+     * Método que busca clientes por nombre
+     * @param nombre Nombre a buscar
+     * @return regresa una lista de todos los clientes con nombre coincidente
+     */
+    public List<Cliente> buscarNombre(String nombre) {
+        List<Cliente> clientesB = repCliente.buscarNombre(nombre);
+        return clientesB;
     }
 
 }
