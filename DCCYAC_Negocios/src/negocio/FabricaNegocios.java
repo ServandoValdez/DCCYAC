@@ -9,6 +9,7 @@ public class FabricaNegocios {
 
     private CtrlCliente cliente;
     private CtrlProducto producto;
+    private CtrlPedido pedido;
 
     /**
      * Método que permite recuperar el controlador de Cliente
@@ -38,4 +39,17 @@ public class FabricaNegocios {
         }
     }
 
+    /**
+     * Método que permite recuperar el controlador de producto
+     * 
+     * @return Controlador pedido
+     */
+    public CtrlPedido getCtrlPedido(){
+        if(pedido != null){
+            return pedido;
+        }else{
+            pedido = new CtrlPedido();
+            return pedido;
+        }
+    }
 }

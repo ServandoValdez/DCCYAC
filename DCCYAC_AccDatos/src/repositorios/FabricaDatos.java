@@ -14,6 +14,7 @@ public class FabricaDatos {
 
     private RepCliente rC;
     private RepProducto rP;
+    private RepPedido rPe;
 
     /**
      * Método que permite recuperar el repositorio de Cliente
@@ -40,6 +41,15 @@ public class FabricaDatos {
         } else {
             rP = new RepProducto();
             return rP;
+        }
+    }
+    
+    public RepPedido getRepPedido(){
+        if(rPe!=null){
+            return rPe;
+        }else{
+            rPe = new RepPedido();
+            return rPe;
         }
     }
 }

@@ -16,7 +16,7 @@ public class registrarProducto extends javax.swing.JFrame {
 
     private FabricaNegocios f = new FabricaNegocios();
     private CtrlProducto ctrlProducto = f.getCtrlProducto();
-
+    
     /**
      * Creates new form registrarProducto
      */
@@ -24,7 +24,7 @@ public class registrarProducto extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
     }
-
+    
     /**
      * Este método verifica que los datos ingresados por el usuarios sean los
      * requeridos por el sistema.
