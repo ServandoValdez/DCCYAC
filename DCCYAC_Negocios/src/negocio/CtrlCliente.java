@@ -65,5 +65,15 @@ public class CtrlCliente {
         List<Cliente> clientesB = repCliente.buscarNombre(nombre);
         return clientesB;
     }
+    
+    /**
+     * Método que busca clientes por apellido
+     * @param apellido Apellido a buscar
+     * @return regresa una lista de todos los clientes con apellido coincidente
+     */
+    public List<Cliente> buscarApellido(String apellido) {
+        List<Cliente> clientesB = repCliente.buscarApellido(apellido);
+        return clientesB;
+    }
 
 }

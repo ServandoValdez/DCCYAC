@@ -96,6 +96,7 @@ public class consultarClientes extends javax.swing.JFrame {
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaConsulta.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 12)); // NOI18N
@@ -107,6 +108,7 @@ public class consultarClientes extends javax.swing.JFrame {
             }
         ));
         tablaConsulta.setRequestFocusEnabled(false);
+        tablaConsulta.getTableHeader().setReorderingAllowed(false);
         tablaConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaConsultaMouseClicked(evt);
@@ -159,13 +161,19 @@ public class consultarClientes extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String busqueda = txtBusqueda.getText();
-        ArrayList<Cliente> clientesB = (ArrayList<Cliente>) ctrlCliente.buscarNombre(busqueda);
-        if (clientesB  == null) {
+        ArrayList<Cliente> clienteNombre = (ArrayList<Cliente>) ctrlCliente.buscarNombre(busqueda);
+        ArrayList<Cliente> clienteApellido = (ArrayList<Cliente>) ctrlCliente.buscarApellido(busqueda);
+        if (clienteNombre  == null && clienteApellido == null) {
             actualizaTabla(listaClientes);
         }
-        else
+        else 
         {
-            actualizaTabla(clientesB);
+            for (Cliente a : clienteApellido) {
+                if (!clienteNombre.contains(a)){
+                    clienteNombre.add(a);
+                }
+            }
+            actualizaTabla(clienteNombre);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 

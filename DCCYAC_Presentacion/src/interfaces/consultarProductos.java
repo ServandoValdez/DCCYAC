@@ -89,6 +89,7 @@ public class consultarProductos extends javax.swing.JFrame {
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaConsulta.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 12)); // NOI18N
@@ -100,6 +101,7 @@ public class consultarProductos extends javax.swing.JFrame {
             }
         ));
         tablaConsulta.setRequestFocusEnabled(false);
+        tablaConsulta.getTableHeader().setReorderingAllowed(false);
         tablaConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaConsultaMouseClicked(evt);

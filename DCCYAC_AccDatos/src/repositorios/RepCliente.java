@@ -9,11 +9,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
-import java.util.List;
 import objetos.Cliente;
 import static repositorios.RepBase.baseDatos;
-import org.bson.Document; 
-import java.util.Iterator;
+import org.bson.Document;
 import java.util.List;
 import java.util.regex.Pattern;
 import com.mongodb.client.FindIterable;
@@ -95,6 +93,36 @@ public class RepCliente {
             String n = document.getString("nombre");
             
             Cliente  busqueda = clientes.find(Filters.eq("nombre", n)).first();
+            
+            clientesB.add(busqueda);
+        }
+        
+        return clientesB;
+    }
+    
+    /**
+     * Método que busca clientes por apellido
+     * @param apellido Apellido a buscar
+     * @return regresa una lista de todos los clientes con apellidos coincidente
+     */
+    public List<Cliente> buscarApellido(String apellido) {
+        List<Cliente> clientesB = new ArrayList<>();
+        
+        Document regQuery = new Document();
+        regQuery.append("$regex", "(?)" + Pattern.quote(apellido));
+        regQuery.append("$options", "i");
+        
+        Document findQuery = new Document();
+        findQuery.append("apellido", regQuery);
+        
+        FindIterable<Document> iterable = baseDatos.getCollection("Cliente").find(findQuery);
+        MongoCursor<Document> cursor = iterable.iterator();
+        
+        while (cursor.hasNext()) {
+            Document document = cursor.next();
+            String n = document.getString("apellido");
+            
+            Cliente  busqueda = clientes.find(Filters.eq("apellido", n)).first();
             
             clientesB.add(busqueda);
         }

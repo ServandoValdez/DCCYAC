@@ -119,6 +119,7 @@ public class actualizarProducto extends javax.swing.JFrame {
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnCancelar.png"))); // NOI18N
@@ -154,6 +155,7 @@ public class actualizarProducto extends javax.swing.JFrame {
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setFont(new java.awt.Font("Segoe UI Light", 1, 18)); // NOI18N
+        txtDescripcion.setLineWrap(true);
         txtDescripcion.setRows(5);
         txtDescripcion.setBorder(null);
         txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
