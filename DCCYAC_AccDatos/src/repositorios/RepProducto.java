@@ -87,7 +87,7 @@ public class RepProducto {
             Document document = cursor.next();
             String n = document.getString("nombre");
             
-            Producto  busqueda = productos.find(Filters.eq("nombre", n)).first();
+            Producto busqueda = productos.find(Filters.eq("nombre", n)).first();
             
             productosB.add(busqueda);
         }

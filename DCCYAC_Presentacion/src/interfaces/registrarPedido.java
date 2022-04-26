@@ -79,6 +79,8 @@ public class registrarPedido extends javax.swing.JFrame {
         this.cbCliente.setSelectedIndex(0);
         this.cbProducto.setSelectedIndex(0);
         this.txtTotal.setText("0.0");
+        this.productosSeleccionados.clear();
+        this.txtCantidad.setText("");
         DefaultTableModel modelo = new DefaultTableModel() {
 
             @Override
@@ -104,6 +106,7 @@ public class registrarPedido extends javax.swing.JFrame {
         cbCliente = new javax.swing.JComboBox<>();
         cbProducto = new javax.swing.JComboBox<>();
         btnAgregar = new javax.swing.JButton();
+        txtCantidad = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableProductos = new javax.swing.JTable();
@@ -112,20 +115,24 @@ public class registrarPedido extends javax.swing.JFrame {
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtFechaP.setEditable(false);
-        getContentPane().add(txtFechaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 180, 40));
+        txtFechaP.setBorder(null);
+        getContentPane().add(txtFechaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 160, 25));
 
         txtFechaE.setBackground(new java.awt.Color(255, 255, 255));
         txtFechaE.setForeground(new java.awt.Color(255, 255, 255));
         txtFechaE.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
-        getContentPane().add(txtFechaE, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 200, 40));
-        getContentPane().add(txtEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 330, 40));
+        getContentPane().add(txtFechaE, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 210, 30));
 
-        getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 260, -1));
+        txtEstado.setBorder(null);
+        getContentPane().add(txtEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 310, 25));
 
-        getContentPane().add(cbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 260, -1));
+        getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 300, -1));
+
+        getContentPane().add(cbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 322, 110, 30));
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnAtras.png"))); // NOI18N
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,11 +140,15 @@ public class registrarPedido extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, 40, 40));
+        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 40, 40));
+
+        txtCantidad.setBorder(null);
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 50, 25));
 
         txtTotal.setEditable(false);
         txtTotal.setText("0.0");
-        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 523, 320, 30));
+        txtTotal.setBorder(null);
+        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, 330, 20));
 
         tableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,7 +163,7 @@ public class registrarPedido extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableProductos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, 320, 120));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 330, 90));
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnGuardar.png"))); // NOI18N
         btnGuardar.setContentAreaFilled(false);
@@ -163,7 +174,7 @@ public class registrarPedido extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 610, -1, -1));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 500, -1, -1));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnCancelar.png"))); // NOI18N
         btnCancelar.setContentAreaFilled(false);
@@ -174,16 +185,16 @@ public class registrarPedido extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 610, -1, -1));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 500, -1, -1));
 
-        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/registrarPedido.png"))); // NOI18N
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoRegistrarPedido.png"))); // NOI18N
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
+
         Date fecha = txtFechaE.getDate();
         if(txtEstado.getText().isEmpty() || tableProductos.getModel().getRowCount()==0
                 || txtTotal.getText().equalsIgnoreCase("0.0") || fecha == null){
@@ -208,43 +219,49 @@ public class registrarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        menuProductos abrir = new menuProductos();
+        menuPedidos abrir = new menuPedidos();
         abrir.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        if (!txtCantidad.getText().isEmpty()) {
+            DefaultTableModel modelo = new DefaultTableModel() {
 
-        DefaultTableModel modelo = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int colum) {
+                    return false;
+                }
+            };
+            modelo.addColumn("Producto");
+            modelo.addColumn("Precio");
 
-            @Override
-            public boolean isCellEditable(int row, int colum) {
-                return false;
+            int cantidad = Integer.parseInt(txtCantidad.getText());
+
+            String[] a2 = new String[2];
+            for (int i = 0; i < cantidad; i++) {
+                productosSeleccionados.add(listaProductos.get(this.cbProducto.getSelectedIndex()));
             }
-        };
-        modelo.addColumn("Producto");
-        modelo.addColumn("Precio");
+            
+            //se elimina un stock del producto
+            int stock = listaProductos.get(this.cbProducto.getSelectedIndex()).getStock();
+            stock -= cantidad;
+            listaProductos.get(this.cbProducto.getSelectedIndex()).setStock(stock);
+            //Se actualiza el producto con el nuevo stock
+            //ctrlProducto.actualizar(listaProductos.get(this.cbProducto.getSelectedIndex()));
 
-        String[] a2 = new String[2];
-        productosSeleccionados.add(listaProductos.get(this.cbProducto.getSelectedIndex()));
-        //se elimina un stock del producto
-        int stock = listaProductos.get(this.cbProducto.getSelectedIndex()).getStock();
-        stock -= 1;
-        listaProductos.get(this.cbProducto.getSelectedIndex()).setStock(stock);
-        //Se actualiza el producto con el nuevo stock
-        //ctrlProducto.actualizar(listaProductos.get(this.cbProducto.getSelectedIndex()));
+            for (Producto pro : productosSeleccionados) {
+                a2[0] = pro.getNombre();
+                a2[1] = String.valueOf(pro.getPrecio());
+                modelo.addRow(a2);
+            }
 
-        for (Producto pro : productosSeleccionados) {
-            a2[0] = pro.getNombre();
-            a2[1] = String.valueOf(pro.getPrecio());
-            modelo.addRow(a2);
+            float total = Float.parseFloat(txtTotal.getText()) + (listaProductos.get(this.cbProducto.getSelectedIndex()).getPrecio() * cantidad);
+            this.txtTotal.setText(String.valueOf(total));
+            tableProductos.setModel(modelo);
+
+            this.cargarProductos();
         }
-
-        float total = Float.parseFloat(txtTotal.getText()) + listaProductos.get(this.cbProducto.getSelectedIndex()).getPrecio();
-        this.txtTotal.setText(String.valueOf(total));
-        tableProductos.setModel(modelo);
-        
-        this.cargarProductos();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
    
@@ -258,6 +275,7 @@ public class registrarPedido extends javax.swing.JFrame {
     private javax.swing.JLabel fondo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableProductos;
+    private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtEstado;
     private com.toedter.calendar.JDateChooser txtFechaE;
     private javax.swing.JTextField txtFechaP;

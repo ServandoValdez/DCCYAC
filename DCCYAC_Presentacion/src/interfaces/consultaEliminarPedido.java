@@ -7,34 +7,36 @@ package interfaces;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import negocio.CtrlProducto;
+import negocio.CtrlCliente;
+import negocio.CtrlPedido;
 import negocio.FabricaNegocios;
+import objetos.Cliente;
+import objetos.Pedido;
 import objetos.Producto;
 
-/**
- *
- * @author palom
- */
-public class consultaActualizaProducto extends javax.swing.JFrame {
+public class consultaEliminarPedido extends javax.swing.JFrame {
 
     private FabricaNegocios f = new FabricaNegocios();
-    private CtrlProducto ctrlProducto = f.getCtrlProducto();
-    private ArrayList<Producto> listaProducto = (ArrayList<Producto>) ctrlProducto.consultar();
+    private CtrlPedido ctrlPedido = f.getCtrlPedido();
+    private ArrayList<Pedido> listaPedidos = (ArrayList<Pedido>) ctrlPedido.consultar();
+    private CtrlCliente ctrlCliente = f.getCtrlCliente();
 
     /**
      * Creates new form actualizarProducto
      */
-    public consultaActualizaProducto() {
+    public consultaEliminarPedido() {
         initComponents();
         setLocationRelativeTo(this);
-        actualizaTabla(listaProducto);
+        actualizaTabla(listaPedidos);
     }
 
     /**
      * Método que actualiza la tabla.
      */
-    public void actualizaTabla(ArrayList<Producto> lista) {
+    public void actualizaTabla(ArrayList<Pedido> lista) {
         DefaultTableModel modelo = new DefaultTableModel() {
 
             @Override
@@ -43,19 +45,24 @@ public class consultaActualizaProducto extends javax.swing.JFrame {
             }
         };
 
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Precio");
-        modelo.addColumn("Stock");
+        modelo.addColumn("Cliente");
+        modelo.addColumn("Estado");
+        modelo.addColumn("Fecha Entrega");
+        modelo.addColumn("Fecha Pedido");
+        modelo.addColumn("Fecha Precio Final");
 
         tablaConsulta.setModel(modelo);
 
-        String[] datos = new String[3];
-        for (Producto a : lista) {
-            datos[0] = String.valueOf(a.getNombre());
-            datos[1] = String.valueOf(a.getPrecio());
-            datos[2] = String.valueOf(a.getStock());
+        String[] datos = new String[5];
+        for (Pedido a : lista) {
+            datos[0] = String.valueOf(a.getCliente().getNombre());
+            datos[1] = String.valueOf(a.getEstado());
+            datos[2] = String.valueOf(a.getFechaEntregado());
+            datos[3] = String.valueOf(a.getFechaPedido());
+            datos[4] = String.valueOf(a.getPrecioFinal());
             modelo.addRow(datos);
         }
+        
         Font fuente = new Font("Microsoft JhengHei UI Light", Font.BOLD, 14);
         tablaConsulta.setFont(fuente);
         tablaConsulta.setModel(modelo);
@@ -66,15 +73,18 @@ public class consultaActualizaProducto extends javax.swing.JFrame {
      *
      * @return devuelve al producto seleccionado
      */
-    public Producto seleccionado() {
+    public Pedido seleccionado() {
         int seleccion = tablaConsulta.getSelectedRow();
-        Producto producto = new Producto();
-        producto.setId(listaProducto.get(seleccion).getId());
-        producto.setNombre(listaProducto.get(seleccion).getNombre());
-        producto.setDescripcion(listaProducto.get(seleccion).getDescripcion());
-        producto.setPrecio(listaProducto.get(seleccion).getPrecio());
-        producto.setStock(listaProducto.get(seleccion).getStock());
-        return producto;
+        Pedido pedido = new Pedido();
+        pedido.setId(listaPedidos.get(seleccion).getId());
+        pedido.setCliente(listaPedidos.get(seleccion).getCliente());
+        pedido.setEstado(listaPedidos.get(seleccion).getEstado());
+        pedido.setFechaEntregado(listaPedidos.get(seleccion).getFechaEntregado());
+        pedido.setFechaPedido(listaPedidos.get(seleccion).getFechaPedido());
+        pedido.setPrecioFinal(listaPedidos.get(seleccion).getPrecioFinal());
+        pedido.setProductos(listaPedidos.get(seleccion).getProductos());
+        
+        return pedido;
     }
 
     /**
@@ -91,6 +101,7 @@ public class consultaActualizaProducto extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        btnBuscar1 = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -114,7 +125,7 @@ public class consultaActualizaProducto extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaConsulta);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 510, 340));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 430, 300));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnCancelar.png"))); // NOI18N
         btnCancelar.setContentAreaFilled(false);
@@ -125,11 +136,11 @@ public class consultaActualizaProducto extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 610, -1, -1));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 510, -1, -1));
 
         txtBusqueda.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtBusqueda.setBorder(null);
-        getContentPane().add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 250, 30));
+        getContentPane().add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 200, 20));
 
         btnBuscar.setContentAreaFilled(false);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -137,44 +148,66 @@ public class consultaActualizaProducto extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 40, 35));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 40, 35));
 
-        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/consultaActualiza.png"))); // NOI18N
+        btnBuscar1.setContentAreaFilled(false);
+        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 30, 30));
+
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoEliminarPedido.png"))); // NOI18N
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        menuProductos abrir = new menuProductos();
+        menuPedidos abrir = new menuPedidos();
         abrir.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tablaConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaConsultaMouseClicked
-        Producto cl = seleccionado();
-        actualizarProducto c = new actualizarProducto(cl);
+        Pedido cl = seleccionado();
+        eliminarPedido c = new eliminarPedido(cl);
         c.setVisible(true);
         dispose();
     }//GEN-LAST:event_tablaConsultaMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String busqueda = txtBusqueda.getText();
-        ArrayList<Producto> productosB = (ArrayList<Producto>) ctrlProducto.buscarNombre(busqueda);
-        if (productosB  == null) {
-            System.out.println(productosB);
-            actualizaTabla(listaProducto);
-        }
-        else
-        {
-            System.out.println(productosB);
-            actualizaTabla(productosB);
-        }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
+        String busqueda = txtBusqueda.getText();
+        List<Cliente> listCliente = ctrlCliente.buscarNombre(busqueda);
+        
+        if (listCliente != null) {
+            Cliente cliente = listCliente.get(0);
+            System.out.println("Cliente: " + cliente);
+            ArrayList<Pedido> pedidosB = (ArrayList<Pedido>) ctrlPedido.buscarNombre(cliente);
+            if (pedidosB.get(0) == null) {
+                actualizaTabla(listaPedidos);
+            } else {
+                for (int i = 0; i < pedidosB.size(); i++) {
+                    System.out.println(pedidosB);
+                    System.out.println(pedidosB.getClass());
+                }
+                actualizaTabla(pedidosB);
+            }
+        }
+        else {
+            System.out.println("Es null");
+        }
+    }//GEN-LAST:event_btnBuscar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel fondo;
     private javax.swing.JScrollPane jScrollPane2;

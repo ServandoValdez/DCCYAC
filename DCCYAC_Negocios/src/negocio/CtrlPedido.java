@@ -4,6 +4,7 @@
  */
 package negocio;
 import java.util.List;
+import objetos.Cliente;
 import objetos.Pedido;
 import objetos.Producto;
 import repositorios.FabricaDatos;
@@ -17,18 +18,18 @@ public class CtrlPedido {
     private RepPedido repPedido = f.getRepPedido();
     
     /**
-     * Método que regresa una lista de todos los productos
+     * Método que regresa una lista de todos los pedidos
      *
-     * @return regresa una lista de todos los productos.
+     * @return regresa una lista de todos los pedidos.
      */
-    public List<Producto> consultar() {
+    public List<Pedido> consultar() {
         return (List) repPedido.consultar();
     }
 
     /**
-     * Método que guarda un producto
+     * Método que guarda un pedidos
      *
-     * @param producto producto a guardar
+     * @param pedido pedido a guardar
      */
     public void guardar(Pedido pedido) {
         repPedido.guardar(pedido);
@@ -37,19 +38,30 @@ public class CtrlPedido {
     /**
      * Método que elimina un producto.
      *
-     * @param producto producto a eliminar
+     * @param pedido pedido a eliminar
      */
     public void eliminar(Pedido pedido) {
        repPedido.eliminar(pedido);
     }
 
     /**
-     * Método que actualiza un producto
+     * Método que actualiza un pedido
      *
-     * @param producto
+     * @param pedido
      */
     public void actualizar(Pedido pedido) {
         repPedido.actualizar(pedido);
+    }
+    
+    /**
+     * Método que busca productos por nombre
+     * 
+     * @param nombre Nombre a buscar
+     * @return regresa una lista de todos los productos con nombre coincidente
+     */
+    public List<Pedido> buscarNombre(Cliente cliente) {
+        List<Pedido> pedidosB = repPedido.buscarNombre(cliente);
+        return pedidosB;
     }
     
 }

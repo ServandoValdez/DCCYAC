@@ -27,6 +27,7 @@ public class menuPedidos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAtras = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -38,7 +39,19 @@ public class menuPedidos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnAtras.png"))); // NOI18N
+        btnAtras.setContentAreaFilled(false);
+        btnAtras.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnAtras2.png"))); // NOI18N
+        btnAtras.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnAtras2.png"))); // NOI18N
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 410, -1, -1));
 
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnRegistrar.png"))); // NOI18N
         btnRegistrar.setContentAreaFilled(false);
@@ -117,21 +130,34 @@ public class menuPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        
+        consultaActualizaPedido abrir = new consultaActualizaPedido();
+        abrir.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       
+        consultaEliminarPedido abrir = new consultaEliminarPedido();
+        abrir.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        
+        consultaPedido abrir = new consultaPedido();
+        abrir.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        menu abrir = new menu();
+        abrir.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistrar;

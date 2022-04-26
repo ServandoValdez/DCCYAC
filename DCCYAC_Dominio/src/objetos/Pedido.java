@@ -22,6 +22,9 @@ public class Pedido {
     private String estado;
     private float precioFinal;
 
+    public Pedido() {
+    }
+
     public Pedido(Cliente cliente, ArrayList<Producto> productos, Date fechaPedido, Date fechaEntregado, String estado, float precioFinal) {
         this.cliente = cliente;
         this.productos = productos;

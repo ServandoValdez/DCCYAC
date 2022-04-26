@@ -34,6 +34,7 @@ public class eliminarProducto extends javax.swing.JFrame {
      */
     public eliminarProducto(Producto producto) {
         initComponents();
+        setLocationRelativeTo(this);
         this.producto=producto;
         llenarCampos(producto);
     }
@@ -69,7 +70,7 @@ public class eliminarProducto extends javax.swing.JFrame {
         txtPrecio.setText("");
         spinStock.setModel(modeloSpinner);
     }
-        
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,9 +158,7 @@ public class eliminarProducto extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         eliminar();
-        consultaEliminaProducto c = new consultaEliminaProducto();
-        c.setVisible(true);
-        dispose();
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtPrecioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioFocusLost
