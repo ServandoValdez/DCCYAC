@@ -191,6 +191,7 @@ public class eliminarPedido extends javax.swing.JFrame {
         cbCliente.setEnabled(false);
         getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 273, 350, 30));
 
+        cbProducto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         cbProducto.setEnabled(false);
         getContentPane().add(cbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 130, 30));
 

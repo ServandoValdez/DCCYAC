@@ -6,6 +6,7 @@ package interfaces;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import negocio.CtrlCliente;
@@ -29,7 +30,8 @@ public class registrarPedido extends javax.swing.JFrame {
     private CtrlCliente ctrlCliente = f.getCtrlCliente();
     private ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) ctrlCliente.consultar();
     private CtrlProducto ctrlProducto = f.getCtrlProducto();
-    private ArrayList<Producto> listaProductos =(ArrayList<Producto>) ctrlProducto.consultar();
+    private ArrayList<Producto> listaProductos = (ArrayList<Producto>) ctrlProducto.consultar();
+
     //Este producto es el bueno
     //private ArrayList<Producto> listaProductosT= (ArrayList<Producto>) ctrlProducto.consultar();
     /**
@@ -54,7 +56,7 @@ public class registrarPedido extends javax.swing.JFrame {
     }
 
     private void cargarProductos() {
-       this.cbProducto.removeAllItems();
+        this.cbProducto.removeAllItems();
         //this.listaProductos = (ArrayList<Producto>) ctrlProducto.consultar();
         for (Producto p : listaProductos) {
             if (p.getStock() > 0) {
@@ -72,8 +74,8 @@ public class registrarPedido extends javax.swing.JFrame {
     private void guardar() {
 
     }
-    
-    private void limpiar(){
+
+    private void limpiar() {
         this.txtEstado.setText("");
         this.txtFechaE.setCalendar(null);
         this.cbCliente.setSelectedIndex(0);
@@ -132,6 +134,7 @@ public class registrarPedido extends javax.swing.JFrame {
 
         getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 300, -1));
 
+        cbProducto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         getContentPane().add(cbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 322, 110, 30));
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/btnAtras.png"))); // NOI18N
@@ -161,6 +164,11 @@ public class registrarPedido extends javax.swing.JFrame {
 
             }
         ));
+        tableProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableProductos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 330, 90));
@@ -196,14 +204,14 @@ public class registrarPedido extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         Date fecha = txtFechaE.getDate();
-        if(txtEstado.getText().isEmpty() || tableProductos.getModel().getRowCount()==0
-                || txtTotal.getText().equalsIgnoreCase("0.0") || fecha == null){
+        if (txtEstado.getText().isEmpty() || tableProductos.getModel().getRowCount() == 0
+                || txtTotal.getText().equalsIgnoreCase("0.0") || fecha == null) {
             JOptionPane.showMessageDialog(null, "LlENE TODOS LOS CAMPOS");
             return;
         }
-        
+
         //Actualiza el stock de los productos
-        for(Producto pro: listaProductos){
+        for (Producto pro : listaProductos) {
             ctrlProducto.actualizar(pro);
         }
         listaProductos.clear();
@@ -212,10 +220,10 @@ public class registrarPedido extends javax.swing.JFrame {
         Cliente cliente = listaClientes.get(cbCliente.getSelectedIndex());
         String estado = txtEstado.getText().toUpperCase();
         float total = Float.parseFloat(txtTotal.getText());
-        ctrlPedido.guardar(new Pedido(cliente,productosSeleccionados, hoy, fecha, estado,total));
+        ctrlPedido.guardar(new Pedido(cliente, productosSeleccionados, hoy, fecha, estado, total));
         this.limpiar();
         JOptionPane.showMessageDialog(null, "Registro exitoso");
-        
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -242,7 +250,7 @@ public class registrarPedido extends javax.swing.JFrame {
             for (int i = 0; i < cantidad; i++) {
                 productosSeleccionados.add(listaProductos.get(this.cbProducto.getSelectedIndex()));
             }
-            
+
             //se elimina un stock del producto
             int stock = listaProductos.get(this.cbProducto.getSelectedIndex()).getStock();
             stock -= cantidad;
@@ -264,7 +272,39 @@ public class registrarPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-   
+    private void tableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductosMouseClicked
+        int seleccion = tableProductos.getSelectedRow();
+        Producto producto = productosSeleccionados.get(seleccion);
+        float total = Float.parseFloat(txtTotal.getText()) - producto.getPrecio();
+        this.txtTotal.setText(String.valueOf(total));
+        productosSeleccionados.remove(producto);
+
+        for (Producto p : listaProductos) {
+            if (p == producto) {
+                p.setStock(p.getStock() + 1);
+            }
+        }
+        DefaultTableModel modelo = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int colum) {
+                return false;
+            }
+        };
+        modelo.addColumn("Producto");
+        modelo.addColumn("Precio");
+        
+        String[] a2 = new String[2];
+        for (Producto pro : productosSeleccionados) {
+            a2[0] = pro.getNombre();
+            a2[1] = String.valueOf(pro.getPrecio());
+            modelo.addRow(a2);
+        }
+        
+        tableProductos.setModel(modelo);
+        this.cargarProductos();
+    }//GEN-LAST:event_tableProductosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

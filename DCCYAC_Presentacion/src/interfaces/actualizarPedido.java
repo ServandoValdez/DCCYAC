@@ -28,13 +28,13 @@ public class actualizarPedido extends javax.swing.JFrame {
     private FabricaNegocios f = new FabricaNegocios();
     private CtrlPedido ctrlPedido = f.getCtrlPedido();
     boolean confirmacion = false;
-    
+
     private CtrlCliente ctrlCliente = f.getCtrlCliente();
     private ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) ctrlCliente.consultar();
     private CtrlProducto ctrlProducto = f.getCtrlProducto();
-    private ArrayList<Producto> listaProductos =(ArrayList<Producto>) ctrlProducto.consultar();
+    private ArrayList<Producto> listaProductos = (ArrayList<Producto>) ctrlProducto.consultar();
     private ArrayList<Producto> productosSeleccionados = new ArrayList<>();
-    
+
     /**
      * Creates new form registrarCliente
      *
@@ -52,9 +52,9 @@ public class actualizarPedido extends javax.swing.JFrame {
     private boolean verificarDatosCompletos() {
         Date fechaE = txtFechaE.getDate();
         Date fechaP = txtFechaP.getDate();
-        if(txtEstado.getText().isEmpty() || tableProductos.getModel().getRowCount()==0
-                || txtTotal.getText().equalsIgnoreCase("0.0") || fechaE== null
-                || fechaP== null){
+        if (txtEstado.getText().isEmpty() || tableProductos.getModel().getRowCount() == 0
+                || txtTotal.getText().equalsIgnoreCase("0.0") || fechaE == null
+                || fechaP == null) {
             JOptionPane.showMessageDialog(null, "LlENE TODOS LOS CAMPOS");
             return false;
         }
@@ -86,12 +86,12 @@ public class actualizarPedido extends javax.swing.JFrame {
         };
         modelo.addColumn("Producto");
         modelo.addColumn("Precio");
-        
+
         tableProductos.setModel(modelo);
-        
+
         String[] a2 = new String[2];
         ArrayList<Producto> productos = pedido.getProductos();
-        
+
         for (Producto pro : productos) {
             a2[0] = String.valueOf(pro.getNombre());
             a2[1] = String.valueOf(pro.getPrecio());
@@ -124,7 +124,7 @@ public class actualizarPedido extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "DATOS INVÁLIDOS");
         }
     }
-    
+
     private void cargarClientes() {
         for (Cliente e : listaClientes) {
             this.cbCliente.addItem(e.getNombre());
@@ -132,7 +132,7 @@ public class actualizarPedido extends javax.swing.JFrame {
     }
 
     private void cargarProductos() {
-       this.cbProducto.removeAllItems();
+        this.cbProducto.removeAllItems();
         //this.listaProductos = (ArrayList<Producto>) ctrlProducto.consultar();
         for (Producto p : listaProductos) {
             if (p.getStock() > 0) {
@@ -143,7 +143,7 @@ public class actualizarPedido extends javax.swing.JFrame {
         }
     }
 
-    private void limpiar(){
+    private void limpiar() {
         this.txtEstado.setText("");
         this.txtCantidad.setText("");
         this.txtFechaE.setCalendar(null);
@@ -159,7 +159,7 @@ public class actualizarPedido extends javax.swing.JFrame {
         };
         this.tableProductos.setModel(modelo);
     }
-    
+
     private void salir() {
         consultaActualizaPedido c = new consultaActualizaPedido();
         c.setVisible(true);
@@ -221,6 +221,7 @@ public class actualizarPedido extends javax.swing.JFrame {
         });
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 510, -1, -1));
 
+        txtTotal.setEditable(false);
         txtTotal.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         txtTotal.setBorder(null);
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 475, 310, 25));
@@ -243,6 +244,7 @@ public class actualizarPedido extends javax.swing.JFrame {
 
         getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 273, 350, 30));
 
+        cbProducto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         getContentPane().add(cbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 130, 30));
 
         txtFechaE.setBackground(new java.awt.Color(255, 255, 255));
@@ -262,6 +264,11 @@ public class actualizarPedido extends javax.swing.JFrame {
 
             }
         ));
+        tableProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableProductos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 350, 90));
@@ -320,6 +327,11 @@ public class actualizarPedido extends javax.swing.JFrame {
             this.cargarProductos();
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void tableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductosMouseClicked
+    
+
+    }//GEN-LAST:event_tableProductosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

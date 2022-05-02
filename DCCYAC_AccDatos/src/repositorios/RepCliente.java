@@ -115,6 +115,7 @@ public class RepCliente {
         
         while (cursor.hasNext()) {
             Document document = cursor.next();
+            
             String n = document.getString("apellido");
             
             Cliente  busqueda = clientes.find(Filters.eq("apellido", n)).first();

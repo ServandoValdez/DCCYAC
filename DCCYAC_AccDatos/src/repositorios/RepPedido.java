@@ -15,6 +15,7 @@ import objetos.Cliente;
 import objetos.Pedido;
 import java.util.regex.Pattern;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import static repositorios.RepBase.baseDatos;
 
 /**
@@ -84,38 +85,21 @@ public class RepPedido {
         
         Document regQuery = new Document();
         regQuery.append("$regex", "(?)" + Pattern.quote(nombre));
-        
-        System.out.println("nombre: " + nombre);
         regQuery.append("$options", "i");
-        
-        
+
         Document findQuery = new Document();
-        
-        System.out.println("query creada: " + findQuery);
-        
         findQuery.append("cliente.nombre", regQuery);
         
-        System.out.println("query: " + findQuery);
-        
         FindIterable<Document> iterable = baseDatos.getCollection("Pedido").find(findQuery);
-        
-        System.out.println("Iterable: " + iterable);
-        
         MongoCursor<Document> cursor = iterable.iterator();
         
-        System.out.println("Cursor: " + cursor);
-        
-//        MongoCursor<Document> cursor = pedidos.find(eq("nombre", nombre)).iterator();
         while (cursor.hasNext()) {
             Document document = cursor.next();
-            String n = document.getString("cliente.nombre");
+            System.out.println(document);
+            ObjectId n =(ObjectId) document.get("_id");
             
-            System.out.println("elemento: " + n);
-            
-            Pedido busqueda = pedidos.find(Filters.eq("cliente.nombre", nombre)).first();
-            
-            System.out.println("busqueda: " + busqueda);
-            
+            Pedido busqueda = pedidos.find(Filters.eq("_id", n)).first();
+
             pedidoB.add(busqueda);
         }
         

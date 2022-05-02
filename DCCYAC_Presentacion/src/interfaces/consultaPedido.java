@@ -54,15 +54,17 @@ public class consultaPedido extends javax.swing.JFrame {
         tablaConsulta.setModel(modelo);
 
         String[] datos = new String[5];
-        for (Pedido a : lista) {
-            datos[0] = String.valueOf(a.getCliente().getNombre());
-            datos[1] = String.valueOf(a.getEstado());
-            datos[2] = String.valueOf(a.getFechaEntregado());
-            datos[3] = String.valueOf(a.getFechaPedido());
-            datos[4] = String.valueOf(a.getPrecioFinal());
-            modelo.addRow(datos);
+        if (lista != null) {
+            for (Pedido a : lista) {
+                datos[0] = String.valueOf(a.getCliente().getNombre());
+                datos[1] = String.valueOf(a.getEstado());
+                datos[2] = String.valueOf(a.getFechaEntregado());
+                datos[3] = String.valueOf(a.getFechaPedido());
+                datos[4] = String.valueOf(a.getPrecioFinal());
+                modelo.addRow(datos);
+            }
         }
-        
+
         Font fuente = new Font("Microsoft JhengHei UI Light", Font.BOLD, 14);
         tablaConsulta.setFont(fuente);
         tablaConsulta.setModel(modelo);
@@ -80,10 +82,10 @@ public class consultaPedido extends javax.swing.JFrame {
         Date fechaE = listaPedidos.get(seleccion).getFechaEntregado();
         Date fechaP = listaPedidos.get(seleccion).getFechaPedido();
         Float precio = listaPedidos.get(seleccion).getPrecioFinal();
-        
+
         Producto producto = new Producto();
         ctrlPedido.buscarNombre(cliente);
-        
+
 //        Pedido pedido = new Pedido(cliente, productos, fechaP, fechaE, estado, precio);
 //                
 //        producto.setId(listaPedidos.get(seleccion).getId());
@@ -191,23 +193,18 @@ public class consultaPedido extends javax.swing.JFrame {
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
         String busqueda = txtBusqueda.getText();
         List<Cliente> listCliente = ctrlCliente.buscarNombre(busqueda);
-        
-        if (listCliente != null) {
+        ArrayList<Pedido> pedidosB = null;
+
+        if (!listCliente.isEmpty()) {
             Cliente cliente = listCliente.get(0);
-            System.out.println("Cliente: " + cliente);
-            ArrayList<Pedido> pedidosB = (ArrayList<Pedido>) ctrlPedido.buscarNombre(cliente);
-            if (pedidosB.get(0) == null) {
+            pedidosB = (ArrayList<Pedido>) ctrlPedido.buscarNombre(cliente);
+            if (pedidosB.isEmpty()) {
                 actualizaTabla(listaPedidos);
             } else {
-                for (int i = 0; i < pedidosB.size(); i++) {
-                    System.out.println(pedidosB);
-                    System.out.println(pedidosB.getClass());
-                }
                 actualizaTabla(pedidosB);
             }
-        }
-        else {
-            System.out.println("Es null");
+        } else {
+            actualizaTabla(pedidosB);
         }
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
