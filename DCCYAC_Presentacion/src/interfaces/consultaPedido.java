@@ -75,25 +75,18 @@ public class consultaPedido extends javax.swing.JFrame {
      *
      * @return devuelve al producto seleccionado
      */
-    public Producto seleccionado() {
+    public Pedido seleccionado() {
         int seleccion = tablaConsulta.getSelectedRow();
-        Cliente cliente = listaPedidos.get(seleccion).getCliente();
-        String estado = listaPedidos.get(seleccion).getEstado();
-        Date fechaE = listaPedidos.get(seleccion).getFechaEntregado();
-        Date fechaP = listaPedidos.get(seleccion).getFechaPedido();
-        Float precio = listaPedidos.get(seleccion).getPrecioFinal();
+        Pedido pedido = new Pedido();
+        pedido.setId(listaPedidos.get(seleccion).getId());
+        pedido.setCliente(listaPedidos.get(seleccion).getCliente());
+        pedido.setEstado(listaPedidos.get(seleccion).getEstado());
+        pedido.setFechaEntregado(listaPedidos.get(seleccion).getFechaEntregado());
+        pedido.setFechaPedido(listaPedidos.get(seleccion).getFechaPedido());
+        pedido.setPrecioFinal(listaPedidos.get(seleccion).getPrecioFinal());
+        pedido.setProductos(listaPedidos.get(seleccion).getProductos());
 
-        Producto producto = new Producto();
-        ctrlPedido.buscarNombre(cliente);
-
-//        Pedido pedido = new Pedido(cliente, productos, fechaP, fechaE, estado, precio);
-//                
-//        producto.setId(listaPedidos.get(seleccion).getId());
-//        producto.setNombre(listaPedidos.get(seleccion).getNombre());
-//        producto.setDescripcion(listaPedidos.get(seleccion).getDescripcion());
-//        producto.setPrecio(listaPedidos.get(seleccion).getPrecio());
-//        producto.setStock(listaPedidos.get(seleccion).getStock());
-        return producto;
+        return pedido;
     }
 
     /**
@@ -180,8 +173,8 @@ public class consultaPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tablaConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaConsultaMouseClicked
-        Producto cl = seleccionado();
-        actualizarProducto c = new actualizarProducto(cl);
+        Pedido cl = seleccionado();
+        consultaPedido2 c = new consultaPedido2(cl);
         c.setVisible(true);
         dispose();
     }//GEN-LAST:event_tablaConsultaMouseClicked
